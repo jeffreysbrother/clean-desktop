@@ -6,6 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+	"keywords": [
+		"james cool",
+		"cleanup",
+		"move files",
+		"desktop",
+		"clutter",
+		"automate",
+		"tidy"
+	],
   "author": "james cool",
   "license": "ISC",
   "devDependencies": {
