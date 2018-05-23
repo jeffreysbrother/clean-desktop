@@ -1,4 +1,4 @@
-# cleanupJS
+# clean-desktop
 
 You're lazy. You take too many screenshots. You don't want your wife to find out that you're a messy loser with mental issues.
 
