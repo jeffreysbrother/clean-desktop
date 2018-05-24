@@ -15,6 +15,8 @@ const os = require('os'),
 	newDirName = `Cleanup--${month + 1}-${date}-${year}-${hour}-${minute}-${second}`,
 	newDirPath = `${desktopDir}/${newDirName}`;
 
+let alreadyPlayed = false;
+
 
 // dont' do anything if the new directory somehow exists
 if (!fs.existsSync(newDirPath)) {
@@ -24,36 +26,29 @@ if (!fs.existsSync(newDirPath)) {
 }
 
 
-// move all desktop files (except the newly-created folder) within the new folder
-function moveFiles() {
-	return new Promise((resolve, reject) => {
-		fs.readdirSync(desktopDir).forEach(file => {
-			if (file !== newDirName) {
-				fs.rename(`${desktopDir}/${file}`, `${newDirPath}/${file}`, function (err) {
-					if (err) {
-						reject('LOL');
-					} else {
-						resolve(`Files moved to new directory named ${chalk.yellow(newDirName)}`);
-					}
-				});
-			}
-		});
-	});
+const message = err => {
+	if (alreadyPlayed === false) {
+		if (err) {
+			console.log(err);
+			alreadyPlayed = true;
+		} else {
+			console.log(`Files moved to: ${chalk.yellow(newDirName)}`);
+			alreadyPlayed = true;
+		}
+	}
 }
 
 
-function successCallback(result) {
-	console.log(`Cleanup Successful! ${result}.`);
+const rename = file => {
+	if (file !== newDirName) {
+		fs.rename(`${desktopDir}/${file}`, `${newDirPath}/${file}`, message);
+	}
 }
 
-function failureCallback(error) {
-	console.log(`Something bad happened, ${error}.`);
-}
 
-
-moveFiles()
-	.then(successCallback)
-	.catch(failureCallback);
+(function cleanDesktop() {
+	fs.readdirSync(desktopDir).forEach(rename);
+})();
 
 
 // wanted to also move this new folder from /Desktop to /Documents ...
